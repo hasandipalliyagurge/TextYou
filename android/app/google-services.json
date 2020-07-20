@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "391093870982",
+    "firebase_url": "https://textyou-7a1ba.firebaseio.com",
+    "project_id": "textyou-7a1ba",
+    "storage_bucket": "textyou-7a1ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391093870982:android:512d7d5aac158700378c07",
+        "android_client_info": {
+          "package_name": "com.textyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391093870982-9qr4e5ucealfjb3cghkc5gd0legv4fet.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_wOBYpL6ezayY08FFA7vs5seyTPNtCC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391093870982-9qr4e5ucealfjb3cghkc5gd0legv4fet.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
