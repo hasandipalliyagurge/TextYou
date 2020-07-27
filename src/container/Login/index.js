@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {SafeAreaView, Text, View } from 'react-native';
 import {globalStyle, color } from '../../utility';
 import Logo from '../../component/logo';
 import InputField from '../../component/input';
 import RoundCornerButton from '../../component/button/RoundCornerButton';
+import { Store } from '../../context/store';
+import { LOADING_STOP, LOADING_START } from '../../context/actions/types';
 
 //component\logo
 const Login= ({navigation}) => {
+
+const globalState = useContext(Store);
+const { dispatchLoaderAction } = globalState;
+
 const [credentials, setCredentials] = useState({
     email: '',
     password:'',
@@ -19,7 +25,15 @@ onLongPress=()=>{
     }else if(!password){
         alert('Password is required');
     }else{
-        alert(JSON.stringify(credentials));
+        dispatchLoaderAction({
+            type: LOADING_START,
+        });
+       setTimeout( () => {
+        dispatchLoaderAction({
+            type: LOADING_STOP,
+        });
+
+       }, 2000)
     }
 };
 

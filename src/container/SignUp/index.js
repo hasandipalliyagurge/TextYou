@@ -7,7 +7,6 @@ import RoundCornerButton from '../../component/button/RoundCornerButton';
 //import { SignUp } from '..';
 
 
-
 const SignUp= ({navigation}) => {
 const [credentials, setCredentials] = useState({
     name: '',
