@@ -10,7 +10,9 @@ export function StoreProvider(props){
 
      const loaderValue = {mapLoaderState, dispatchLoaderAction};    
 
-     const value = {...loaderValue};
+     const value = {
+          ...loaderValue,
+     };
 
      return <Store.Provider value={value}>{props.children}</Store.Provider>
 
