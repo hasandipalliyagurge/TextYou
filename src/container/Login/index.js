@@ -41,7 +41,7 @@ onLongPress=()=>{
     //    }, 2000)
     LoginRequest(email,password)
     .then((res)=>{
-        if(!res.additionUserInfo) {
+        if (!res.additionalUserInfo) {
             dispatchLoaderAction({
                 type:LOADING_STOP,
             });

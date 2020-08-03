@@ -41,9 +41,10 @@ onSignUpPress = () => {
         dispatchLoaderAction({
             type:LOADING_START,
         });
+
         SignUpRequest(email, password)
         .then((res)=>{
-            if(!res.additionUserInfo) {
+            if( !res.additionalUserInfo) {
                 dispatchLoaderAction({
                     type:LOADING_STOP,
                 });
