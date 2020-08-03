@@ -41,7 +41,15 @@ onSignUpPress = () => {
             type:LOADING_START,
         });
         SignUpRequest(email, password)
-        .then(()=>{
+        .then((res)=>{
+            if(!res.additionUserInfo) {
+                dispatchLoaderAction({
+                    type:LOADING_STOP,
+                });
+                alert(res);
+                return;
+            }
+
             let uid = firebase.auth().currentUser.uid;
             let profileImg='';
             AddUser(name,email,uid,profileImg)

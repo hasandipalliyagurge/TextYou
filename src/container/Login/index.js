@@ -39,6 +39,13 @@ onLongPress=()=>{
     //    }, 2000)
     LoginRequest(email,password)
     .then((res)=>{
+        if(!res.additionUserInfo) {
+            dispatchLoaderAction({
+                type:LOADING_STOP,
+            });
+            alert(res);
+            return;
+        }
         setAsyncStorage(keys.uuid, res.user.uid);
         setUniqueValue(res.user.uid);
         dispatchLoaderAction({
