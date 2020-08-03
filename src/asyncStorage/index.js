@@ -1,7 +1,8 @@
-import AsyncStorage from '@react-native-community/as'
+import AsyncStorage from '@react-native-community/async-storage'
 
 export const keys = {
     uuid:'uuid',
+    uid:'uid',
 
 };
 

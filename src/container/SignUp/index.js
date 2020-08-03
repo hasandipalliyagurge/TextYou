@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {SafeAreaView, Text, View } from 'react-native';
 import {globalStyle, color } from '../../utility';
 import Logo from '../../component/logo';
 import InputField from '../../component/input';
 import RoundCornerButton from '../../component/button/RoundCornerButton';
+import { Store } from '../../context/store';
+import { LOADING_STOP, LOADING_START } from '../../context/actions/types';
+import { SignUpRequest } from '../../network';
+import { AddUser } from '../../network/user';
+import {setAsyncStorage, keys} from '../../asyncStorage';
+import {setUniqueValue } from '../../utility/constants';
+import firebase from '../../firebase/config';
 //import { SignUp } from '..';
 
 
 const SignUp= ({navigation}) => {
+    const globalState = useContext(Store);
+    const { dispatchLoaderAction } = globalState;
+
 const [credentials, setCredentials] = useState({
     name: '',
     email:'',
@@ -27,7 +37,35 @@ onSignUpPress = () => {
     }else if(password !== confirmPassword){
         alert('Password did not match!');
     }else{
-        alert(JSON.stringify(credentials));
+        dispatchLoaderAction({
+            type:LOADING_START,
+        });
+        SignUpRequest(email, password)
+        .then(()=>{
+            let uid = firebase.auth().currentUser.uid;
+            let profileImg='';
+            AddUser(name,email,uid,profileImg)
+            .then(()=>{
+                setAsyncStorage(keys.uuid, uid);
+                setUniqueValue(uid);
+                dispatchLoaderAction({
+                    type:LOADING_STOP,
+                });
+                navigation.replace('Dashboard');
+            })
+            .catch((err)=>{
+                dispatchLoaderAction({
+                    type: LOADING_STOP,
+                });
+                alert(err);
+            });
+        })
+        .catch((err)=>{
+            dispatchLoaderAction({
+                type: LOADING_STOP,
+            });
+            alert(err);
+        });
     }
 };
 

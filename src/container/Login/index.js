@@ -6,6 +6,9 @@ import InputField from '../../component/input';
 import RoundCornerButton from '../../component/button/RoundCornerButton';
 import { Store } from '../../context/store';
 import { LOADING_STOP, LOADING_START } from '../../context/actions/types';
+import { LoginRequest } from '../../network';
+import { setAsyncStorage,keys } from '../../asyncStorage';
+import { setUniqueValue } from '../../utility/constants';
 
 //component\logo
 const Login= ({navigation}) => {
@@ -28,12 +31,27 @@ onLongPress=()=>{
         dispatchLoaderAction({
             type: LOADING_START,
         });
-       setTimeout( () => {
-        dispatchLoaderAction({
-            type: LOADING_STOP,
-        });
+    //    setTimeout( () => {
+    //     dispatchLoaderAction({
+    //         type: LOADING_STOP,
+    //     });
 
-       }, 2000)
+    //    }, 2000)
+    LoginRequest(email,password)
+    .then((res)=>{
+        setAsyncStorage(keys.uuid, res.user.uid);
+        setUniqueValue(res.user.uid);
+        dispatchLoaderAction({
+            type:LOADING_STOP,
+        });
+        navigation.replace('Dashboard');
+    })
+    .catch((err)=>{
+        dispatchLoaderAction({
+            type:LOADING_STOP,
+        });
+        alert(err);
+    });
     }
 };
 
