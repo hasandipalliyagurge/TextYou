@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import {SafeAreaView, Text, View } from 'react-native';
+import {SafeAreaView, Text, View, Keyboard, KeyboardAvoidingView,TouchableWithoutFeedback } from 'react-native';
 import {globalStyle, color } from '../../utility';
 import Logo from '../../component/logo';
 import InputField from '../../component/input';
@@ -8,13 +8,15 @@ import { Store } from '../../context/store';
 import { LOADING_STOP, LOADING_START } from '../../context/actions/types';
 import { LoginRequest } from '../../network';
 import { setAsyncStorage,keys } from '../../asyncStorage';
-import { setUniqueValue } from '../../utility/constants';
+import { setUniqueValue, keyboardVerticalOffset } from '../../utility/constants';
+//import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 //component\logo
 const Login= ({navigation}) => {
 
 const globalState = useContext(Store);
 const { dispatchLoaderAction } = globalState;
+const [showLogo, toggleLogo] = useState(true);
 
 const [credentials, setCredentials] = useState({
     email: '',
@@ -69,22 +71,48 @@ const handleOnChange= (name,value)=>{
     });
 };
 
-    return (
-        <SafeAreaView style={[globalStyle.flex1, {backgroundColor: color.BLACK}]}>
-            <View style={[globalStyle.flex1, {backgroundColor: color.BLACK}]}>
-                <Logo/>
+//on focus input
+const handleFocus= () =>{
+    setTimeout(()=>{
+        toggleLogo(false);
+    });
+};
+//on blur input
+const handleBlur=() =>{
+    setTimeout(()=>{
+        toggleLogo(true);
+    });
+};
 
+    return (
+        <KeyboardAvoidingView
+        keyboardVerticalOffset={keyboardVerticalOffset}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={[globalStyle.flex1, { backgroundColor: color.BLACK }]}
+        >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
+        <SafeAreaView
+         style={[globalStyle.flex1, {backgroundColor: color.BLACK}]}
+         >
+            {showLogo && (
+            <View style={[globalStyle.containerCentered]}>
+              <Logo />
             </View>
+          )}
             <View style={[globalStyle.flex2, globalStyle.sectionCentered]}>
                 <InputField placeholder="Enter Email" 
                 value={email}
                 onChangeText={(text)=>handleOnChange('email', text)}
+                onFocus={() => handleFocus()}
+                onBlur={() => handleBlur()}
                 />
                 <InputField 
                 placeholder="Enter Password" 
                 secureTextEntry={true} 
                 value={password}
                 onChangeText={(text)=>handleOnChange('password', text)}
+                onFocus={() => handleFocus()}
+                onBlur={() => handleBlur()}
                 />
                 <RoundCornerButton title="Login"  onPress={()=>onLongPress()}/>
                 <Text style={{
@@ -96,6 +124,10 @@ const handleOnChange= (name,value)=>{
                 </Text>
             </View>
         </SafeAreaView>
+
+              
+        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 };
 

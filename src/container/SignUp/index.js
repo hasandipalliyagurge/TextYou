@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import {SafeAreaView, Text, View } from 'react-native';
+import {SafeAreaView, Text, View, Keyboard, KeyboardAvoidingView,TouchableWithoutFeedback  } from 'react-native';
 import {globalStyle, color } from '../../utility';
 import Logo from '../../component/logo';
 import InputField from '../../component/input';
@@ -9,7 +9,7 @@ import { LOADING_STOP, LOADING_START } from '../../context/actions/types';
 import { SignUpRequest } from '../../network';
 import { AddUser } from '../../network/user';
 import {setAsyncStorage, keys} from '../../asyncStorage';
-import {setUniqueValue } from '../../utility/constants';
+import {setUniqueValue, keyboardVerticalOffset } from '../../utility/constants';
 import firebase from '../../firebase/config';
 //import { SignUp } from '..';
 
@@ -17,6 +17,7 @@ import firebase from '../../firebase/config';
 const SignUp= ({navigation}) => {
     const globalState = useContext(Store);
     const { dispatchLoaderAction } = globalState;
+    const [showLogo, toggleLogo] = useState(true);
 
 const [credentials, setCredentials] = useState({
     name: '',
@@ -84,31 +85,60 @@ const handleOnChange= (name,value)=>{
     });
 };
 
-    return (
-        <SafeAreaView style={[globalStyle.flex1, {backgroundColor: color.BLACK}]}>
-            <View style={[globalStyle.flex1, {backgroundColor: color.BLACK}]}>
-                <Logo/>
+//on focus input
+const handleFocus= () =>{
+    setTimeout(()=>{
+        toggleLogo(false);
+    },200);
+};
+//on blur input
+const handleBlur=() =>{
+    setTimeout(()=>{
+        toggleLogo(true);
+    },200);
+};
 
-            </View> 
+    return (
+        <KeyboardAvoidingView
+        keyboardVerticalOffset={keyboardVerticalOffset}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={[globalStyle.flex1, { backgroundColor: color.BLACK }]}
+        >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
+        
+        <SafeAreaView style={[globalStyle.flex1, {backgroundColor: color.BLACK}]}>
+        {showLogo && (
+            <View style={[globalStyle.containerCentered]}>
+              <Logo />
+            </View>
+          )} 
             <View style={[globalStyle.flex2, globalStyle.sectionCentered]}>
                 <InputField placeholder="Enter Name" 
                 value={name}
                 onChangeText={(text)=>handleOnChange('name', text)}
+                onFocus={() => handleFocus()}
+                onBlur={() => handleBlur()}
                 />
                 <InputField placeholder="Enter Email" 
                 value={email}
                 onChangeText={(text)=>handleOnChange('email', text)}
+                onFocus={() => handleFocus()}
+                onBlur={() => handleBlur()}
                 />
                 <InputField 
                 placeholder="Enter Password" 
                 secureTextEntry={true} 
                 value={password}
                 onChangeText={(text)=>handleOnChange('password', text)}
+                onFocus={() => handleFocus()}
+                onBlur={() => handleBlur()}
                 />
                 <InputField placeholder="Confirm Password" 
                 secureTextEntry={true} 
                 value={confirmPassword}
                 onChangeText={(text)=>handleOnChange('confirmPassword', text)}
+                onFocus={() => handleFocus()}
+                onBlur={() => handleBlur()}
                 />
 
                 <RoundCornerButton title="SignUp"  onPress={() => onSignUpPress()} />
@@ -122,6 +152,8 @@ const handleOnChange= (name,value)=>{
                 </Text>
             </View>
         </SafeAreaView>
+        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 };
 
