@@ -10,7 +10,8 @@ import { SignUpRequest } from '../../network';
 import { AddUser } from '../../network/user';
 import {setAsyncStorage, keys} from '../../asyncStorage';
 import {setUniqueValue, keyboardVerticalOffset } from '../../utility/constants';
-import firebase from '../../firebase/config';
+import firebase from 'firebase';
+//import firebase from '../../firebase/config';
 //import { SignUp } from '..';
 
 

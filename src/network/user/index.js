@@ -1,4 +1,5 @@
-import firebase from "../../firebase/config";
+import firebase from 'firebase';
+//import firebase from '../../firebase/config';
 
 export const AddUser = async (name, email, uid, profileImg) => {
   try {
