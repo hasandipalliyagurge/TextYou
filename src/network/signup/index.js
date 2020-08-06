@@ -1,4 +1,5 @@
-import firebase from "../../firebase/config";
+import firebase from 'firebase';
+//import firebase from '../../firebase/config';
 
 const SignUpRequest  = async (email, password) => {
   try {

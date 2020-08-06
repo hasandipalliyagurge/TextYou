@@ -1,4 +1,6 @@
-import firebase from '../../firebase/config';
+import firebase from 'firebase';
+//import firebase from '../../firebase/config';
+
 const LogoutUser = async () => {
     try {
         return await firebase.auth().signOut();
