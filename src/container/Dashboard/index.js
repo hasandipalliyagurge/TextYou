@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useContext, useEffect, useState } from 'react';
 import {View, Text, Alert, FlatList, SafeAreaView } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons'
 import { color, globalStyle } from '../../utility';
 import LogOutUser from '../../network/logout';
@@ -12,6 +13,7 @@ import { Profile, ShowUsers } from '../../component';
 //import { database } from 'firebase';
 //import { SafeAreaView } from 'react-native-safe-area-context';
 import { Store } from '../../context/store';
+import { UpdateUser } from '../../network';
 
 
 const Dashboard= ({navigation}) => {
@@ -98,7 +100,44 @@ try{
   }
 }, []);
 
-
+const selectPhotoTapped=()=>{
+  const option ={
+    storageOptions:{
+      skipBackup:true
+    }
+  };
+  ImagePicker.showImagePicker(option, (response) => {
+    if(response.didCancel){
+      console.log('User cancel image picker')
+    }
+    else if(response.error){
+      console.log('Image picker error',response.error)
+    }
+    else{
+      //base 64
+      let source = 'data:image/jpeg;base64,' + response.data;
+      dispatchLoaderAction({
+        type:LOADING_START
+      });
+      UpdateUser(uuid, source)
+      .then(()=>{
+        setUserDetail({
+          ...userDetail,
+          profileImg: source,
+        });
+        dispatchLoaderAction({
+          type:LOADING_STOP,
+        });
+      })
+      .catch((err)=>{
+        dispatchLoaderAction({
+          type: LOADING_STOP
+        });
+        alert(err);
+      });
+    }
+  });
+};
 
 
 const logout = () => {
@@ -124,6 +163,7 @@ const logout = () => {
                 <Profile
                 img={profileImg}
                 name={name}
+                onEditImgTap={() => selectPhotoTapped()}
                 />
             }
             renderItem={({item}) => (
