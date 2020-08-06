@@ -153,6 +153,20 @@ const logout = () => {
 };
 
 
+const imgTap = (profileImg, name) => {
+  if (!profileImg) {
+    navigation.navigate('ShowFullImg', {
+      name,
+      imgText: name.charAt(0),
+    });
+  } else {
+    navigation.navigate('ShowFullImg', { name, img: profileImg });
+  }
+};
+
+
+
+
     return (
         <SafeAreaView style={[globalStyle.flex1, {backgroundColor:color.BLACK}]}>
          <FlatList
@@ -164,10 +178,13 @@ const logout = () => {
                 img={profileImg}
                 name={name}
                 onEditImgTap={() => selectPhotoTapped()}
+                onImgTap={()=>imgTap(profileImg, name)}
                 />
             }
             renderItem={({item}) => (
-                <ShowUsers name={item.name} img= {item.profileImg} />
+                <ShowUsers name={item.name} img= {item.profileImg} 
+                onImgTap={()=>imgTap(item.profileImg, item.name)}
+                /> 
             )}
           />
         </SafeAreaView> 
