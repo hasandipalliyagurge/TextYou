@@ -14,7 +14,7 @@ const ChatBox = ({ userId, msg, img, onImgTap }) => {
       transparent
       style={{
         maxWidth: deviceWidth / 2 + 10,
-        alignSelf: isCurrentUser ? "flex-end" : "flex-start",
+        alignSelf: isCurrentUser ? 'flex-end' : 'flex-start',
       }}
     >
       <View

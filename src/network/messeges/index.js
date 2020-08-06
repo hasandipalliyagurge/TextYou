@@ -1,7 +1,7 @@
 //import firebase from '../../firebase/config';
 import firebase from 'firebase';
 
-export const senderMsg = async (email, password) => {
+export const senderMsg = async (msgValue, currentUserId, guestUserId, img) => {
   try {
     return await firebase
       .database()

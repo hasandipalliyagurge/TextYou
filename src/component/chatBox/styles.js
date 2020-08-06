@@ -7,7 +7,7 @@ export default StyleSheet.create({
     color: color.BLACK,
     fontSize: 18,
     marginVertical: 5,
-    fontWeight: "500",
+    fontWeight: '500',
     padding: 8,
   },
 });
