@@ -166,6 +166,26 @@ const imgTap = (profileImg, name) => {
   }
 };
 
+// Name Tap
+
+const nameTap = (profileImg, name, guestUserId) => {
+  if (!profileImg) {
+    navigation.navigate('Chat', {
+      name,
+      imgText: name.charAt(0),
+      guestUserId,
+      currentUserId: uuid,
+    });
+  } else {
+    navigation.navigate('Chat', {
+      name,
+      img: profileImg,
+      guestUserId,
+      currentUserId: uuid,
+    });
+  }
+};
+
 //Get opacity
 const getOpacity = () => {
    if (deviceHeight < smallDeviceHeight) {
@@ -212,6 +232,7 @@ const getOpacity = () => {
             renderItem={({item}) => (
                 <ShowUsers name={item.name} img= {item.profileImg} 
                 onImgTap={()=>imgTap(item.profileImg, item.name)}
+                onNameTap={()=>nameTap(item.profileImg, item.name, item.id)}
                 /> 
             )}
           />
