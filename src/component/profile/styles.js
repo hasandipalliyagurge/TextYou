@@ -25,7 +25,7 @@ const getDimensions = (key) => {
           width: 40,
           borderRadius: 20,
           backgroundColor: color.SEMI_TRANSPARENT,
-          position: "absolute",
+          position: 'absolute',
           right: 20,
           bottom: 10,
         };
@@ -55,7 +55,7 @@ const getDimensions = (key) => {
           width: 40,
           borderRadius: 20,
           backgroundColor: color.SEMI_TRANSPARENT,
-          position: "absolute",
+          position: 'absolute',
           right: 10,
           bottom: 10,
         };
