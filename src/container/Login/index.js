@@ -96,7 +96,11 @@ const handleBlur=() =>{
          >
             {showLogo && (
             <View style={[globalStyle.containerCentered]}>
+              <Text>{"\n"}</Text>
               <Logo />
+              <Text>{"\n"}</Text>
+              <Text style={{fontSize: 19, color:'white', textAlign: "center"}}> H.N. Palliyaguruge</Text>
+              <Text style={{fontSize: 19, color:'white', textAlign: "center"}}> 17001201</Text>
             </View>
           )}
             <View style={[globalStyle.flex2, globalStyle.sectionCentered]}>
